@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  biton:
+    image: ${REGISTRY}/biton${SUFFIX}:latest
+    container_name: biton
+    environment:
+      UI_HOST: ${UI_HOST}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      CERT_HOST: ${TS_HOST}
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
+    volumes:
+      - /var/log/biton:/var/log/biton
+      - /etc/biton:/etc/biton
+    ports:
+      - 443:443
+    restart: unless-stopped

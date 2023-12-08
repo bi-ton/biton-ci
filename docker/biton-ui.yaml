@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  ui:
+    image: ${REGISTRY}/biton-ui${SUFFIX}:latest
+    container_name: biton-ui
+    restart: unless-stopped
+  sws:
+    image: ${REGISTRY}/sws:latest
+    container_name: biton-ws
+    volumes:
+      - /var/log/sws:/var/log/sws
+      - /etc/sws/cert:/etc/sws/cert
+    environment:
+      CERT_HOST: ${UI_HOST}
+      ADD_ROUTES: "/api:https://${FV_HOST}/api,/:http://ui"
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
