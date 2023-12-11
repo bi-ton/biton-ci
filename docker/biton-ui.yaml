@@ -12,7 +12,7 @@ services:
       - /etc/sws/cert:/etc/sws/cert
     environment:
       CERT_HOST: ${UI_HOST}
-      ADD_ROUTES: "/api:https://${FV_HOST}/api,/:http://ui"
+      ADD_ROUTES: "/api:https://${BT_HOST}/api,/:http://ui"
     ports:
       - "80:80"
       - "443:443"
