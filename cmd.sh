@@ -14,10 +14,9 @@ LoadEnv $GlobalEnv
 
 Pwd=$PWD
 Company=$(echo $COMPANY | awk '{print tolower($0)}')
-Ip=$(curl -s https://ipinfo.io/ip)
 Branches=$(echo -e $(ls -1 $BranchEnv* | cut -c $((${#BranchEnv}+1))- | sed "s/.//" | sed "s/^$/$PROD_BRANCH/" | sed "s/example//"))
 Components=$(echo "$COMPONENTS" | tr , ' ')
-DockerRegistry=$Ip:$REGISTRY_PORT
+DockerRegistry=$CI_HOST:$REGISTRY_PORT
 WorkDir=$(dirname $Pwd)
 SrcDir=$WorkDir/src
 
@@ -31,7 +30,7 @@ NC='\e[0m'
 
 echo -e "${Cyan}"
 echo "company    : $Company"
-echo "ip         : $Ip"
+echo "host       : $CI_HOST"
 echo "branches   : $Branches"
 echo "components : $Components"
 echo "registry   : $DockerRegistry"
@@ -102,7 +101,7 @@ function GenSshKey {
     cat "$key"
     echo -e "${NC}"
     rm "$key"*
-    echo -e "set private key to secret ${Purple}SSH_KEY${NC} and ${Red}$Ip${NC} to ${Purple}SSH_HOST${NC} in github repositories:"
+    echo -e "set private key to secret ${Purple}SSH_KEY${NC} and ${Red}$CI_HOST${NC} to ${Purple}SSH_HOST${NC} in github repositories:"
     for component in $Components; do
         echo "https://github.com/$Company/$component/settings/secrets/actions"
     done
