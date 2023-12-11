@@ -322,7 +322,7 @@ function Build {
     if [ $Component == "biton" ]; then
         cp biton.conf.example biton.conf
     fi
-    docker build -t $DockerRegistry/$Component$suffix .
+    docker build -t $DockerRegistry/$Component$suffix . --network host
     docker push $DockerRegistry/$Component$suffix
     RemoveDangling
     NotifyBuild "✅" "builded" "$(ElapsedTime $tm)"
