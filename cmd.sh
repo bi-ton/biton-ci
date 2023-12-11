@@ -213,7 +213,7 @@ function BuildSws {
     GitClone $name
     cp sws.conf.example sws.conf
     touch routes.lst
-    docker build -t $DockerRegistry/$name .
+    docker build -t $DockerRegistry/$name . --network host
     docker push $DockerRegistry/$name
     cd ..
     rm -r $name
